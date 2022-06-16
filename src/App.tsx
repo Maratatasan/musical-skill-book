@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import './App.css';
-import { AdvertDetails } from './compnents/advertDetails';
-import { MainBaner } from './compnents/mainBaner';
-import { MainBar } from './compnents/mainBar';
+import "./App.css";
+import { AdvertDetails } from "./components/advertDetails";
+import { MainBanner } from "./components/mainBanner";
+import { MainBar } from "./components/mainBar";
 
 function App() {
   return (
     <div className="App">
-<MainBaner/>
-<MainBar/>
-<AdvertDetails/>
+      <MainBanner />
+      <MainBar />
+      <AdvertDetails />
     </div>
   );
 }

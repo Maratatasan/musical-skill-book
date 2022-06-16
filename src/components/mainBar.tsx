@@ -7,7 +7,7 @@ export function MainBar() {
     "History",
     "About",
     "Contact",
-    'Colaborate',
+    'Collaborate',
     'Genre'
   ]);
 
