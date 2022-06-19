@@ -1,4 +1,6 @@
-import { OneAdd, iAdData } from "./OneAd";
+import { OneAd, iAdData } from "./OneAd";
+
+
 
 interface iAdTypes {
   OFFERING: string;
@@ -10,15 +12,15 @@ const adTypes: iAdTypes = {
   REQUEST: "REQUEST",
 };
 
-export function AdList() {
+export function AdList(): JSX.Element {
 
 
   return (
     <div>
       <h1>Add List</h1>
-      <div className="ad-list" style={{display: 'flex', width:}}>
+      <div className="ad-list" style={{display: 'flex', width:'1200px'}}>
         {getMockAdData(adTypes).map((ad, i) =>
-          OneAdd(i, ad)
+          OneAd(i, ad)
         )}
       </div>
     </div>
@@ -30,11 +32,11 @@ function getMockAdData(adTypes: iAdTypes): iAdData[] {
 
   return [
     {
-      title: "Profesional Mixing Service",
+      title: "Professional Mixing Service",
       skill: "Mixing engineer",
       city: "London",
       about:
-        "I am a Profesional mixing engineer with over 10 years of experience in the mixing industry. Looking to make a difference in the world of mixing.",
+        "I am a Professional mixing engineer with over 10 years of experience in the mixing industry. Looking to make a difference in the world of mixing.",
       musicGenre: "Rock",
       addType: OFFERING,
     },
