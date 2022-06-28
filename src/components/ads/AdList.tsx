@@ -1,6 +1,5 @@
+import { equal } from "assert";
 import { OneAd, iAdData } from "./OneAd";
-
-
 
 interface iAdTypes {
   OFFERING: string;
@@ -13,15 +12,62 @@ const adTypes: iAdTypes = {
 };
 
 export function AdList(): JSX.Element {
+  const addData = getMockAdData(adTypes);
+  const filterKeys = Object.keys(addData[0]);
+  let ad: any;
+  let key: string;
+  const filterSet: any = {};
 
+  for (ad of addData) {
+    for (key of filterKeys) {
+      if (ad[key]) {
+        if (!filterSet.hasOwnProperty(key)) {
+          filterSet[key] = new Set();
+        }
+        filterSet[key].add(ad[key]);
+      }
+    }
+  }
 
+  filterSet["title"].forEach((element: any) => {
+    console.log(element);
+  });
+
+  const filters: any = {};
+
+  filterKeys.forEach((key) => {
+    filters[key] = [];
+  });
+  // console.log('the log',filterSet['title'].entries());
   return (
     <div>
       <h1>Add List</h1>
-      <div className="ad-list" style={{display: 'flex', width:'1200px'}}>
-        {getMockAdData(adTypes).map((ad, i) =>
-          OneAd(i, ad)
-        )}
+      <div>
+        <h2>filter by</h2>
+        <div
+          className="filter-key-div"
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+          }}
+        >
+          {filterKeys.map((key) => (
+            <div>
+              <h4 className="key-header"> {key}</h4>
+              <select>
+                {filterSet[key].forEach((value: any) => {
+                  return filters[key].push(<option key={value}>{value}</option>)
+                })}
+              </select>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div
+        className="ad-list"
+        style={{ display: "flex", width: "1200px" }}
+      >
+        {addData.map((ad, i) => OneAd(i, ad))}
       </div>
     </div>
   );

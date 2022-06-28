@@ -28,7 +28,7 @@ export function OneAd(i: number, adData: iAdData): JSX.Element {
       <p>skill: {s(skill)}</p>
       <p>city: {s(city)}</p>
       <p>about: {about}</p>
-      <p>music genre/s: {s(musicGenre)}</p>
+      <p>music genre: {s(musicGenre)}</p>
     </div>
   );
 }
