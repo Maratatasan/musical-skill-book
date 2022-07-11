@@ -1,4 +1,4 @@
-export interface iAdData {
+export interface IAdData {
   title: string;
   skill: string;
   city: string;
@@ -7,9 +7,11 @@ export interface iAdData {
   addType: string;
 }
 
-export function OneAd(i: number, adData: iAdData): JSX.Element {
+
+export function Ad(props: IAdData): JSX.Element {
+
   const { title, skill, city, about, musicGenre, addType } =
-    adData;
+    props;
 
   function s(text: string) {
     return <strong>{text}</strong>;
@@ -21,7 +23,7 @@ export function OneAd(i: number, adData: iAdData): JSX.Element {
         padding: "10px",
         margin: "10px",
         boxSizing: "border-box",
-        width: "300px",
+        width: "1000px",
       }}
     >
       <h1>{title}</h1>
