@@ -1,7 +1,7 @@
 export function MainBanner(){
     return (
         <div>
-            <h1>Colab Hub</h1>
+            <h1>Music Skill Book</h1>
         </div>
     )
 }

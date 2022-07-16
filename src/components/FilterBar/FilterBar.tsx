@@ -58,7 +58,7 @@ export function FilterBar({ ads, handleFilter, removeFromFilterList }: IFilterBa
                         <option value="all">all</option>
                         {
                             filterSet[filterKey].map((item: string) => {
-                                return <option key={item} value={item}>{item}</option>;
+                                return <option key={item}>{item}</option>;
                             })
                         }
                     </select>

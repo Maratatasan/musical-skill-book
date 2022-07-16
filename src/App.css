@@ -1,3 +1,7 @@
+:root {
+  --grey-one: rgb(214, 214, 214);
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -5,3 +9,8 @@
   align-items: center;
   margin: auto;
 }
+
+.grey-one{
+  background-color: var(--grey-one);
+}
+

@@ -8,6 +8,7 @@ import { FilterBar } from "./components/FilterBar/FilterBar";
 import { AdvertDetails } from "./components/advertDetails";
 import { MainBanner } from "./components/mainBanner";
 import { MainBar } from "./components/mainBar";
+import { Filter } from "./components/FilterBar/Filter";
 
 
 
@@ -56,8 +57,10 @@ function App() {
 
   return (
     <div className="App" >
+      
       <MainBanner />
       <MainBar />
+      <Filter />
       <FilterBar ads={adsInUI} handleFilter={handleFilter} removeFromFilterList={removeFromFilterList} />
       <AdList ads={adsInUI} />
     </div>
