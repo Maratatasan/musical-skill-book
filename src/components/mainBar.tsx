@@ -15,7 +15,7 @@ export function MainBar() {
 
 
   return (
-    <div style={{border: 'solid grey 1px', display: 'flex', justifyContent: 'center'}}>
+    <div className="spacing-1" style={{border: 'solid grey 1px', display: 'flex', justifyContent: 'center'}}>
       {selectedTab.map((tabText, index) => (
         <OneBarTab text={tabText} key={tabText+index} index={index} />
       ))}

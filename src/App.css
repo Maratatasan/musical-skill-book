@@ -1,5 +1,5 @@
 :root {
-  --grey-one: rgb(214, 214, 214);
+  --grey-one: rgba(238, 236, 236, 0.873);
 }
 
 .App {
@@ -11,6 +11,22 @@
 }
 
 .grey-one{
-  background-color: var(--grey-one);
+  background: rgb(227,227,227);
+  background: linear-gradient(0deg, rgba(227,227,227,0.4) 41%, rgba(207, 207, 207, 0.3) 50%);
+}
+
+.radius-5{
+  border-radius: 5%;
+}
+
+#filter-search:focus {
+  outline: none;
+}
+  
+.spacing-1{
+  letter-spacing: 1px;
+}
+.spacing-05{
+  letter-spacing: 0.5px;
 }
 

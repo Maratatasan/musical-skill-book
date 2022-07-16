@@ -75,18 +75,19 @@ export function Filter() {
   };
 
   return (
-    <div className="grey-one">
+    <div className="grey-one radius-5 spacing-05" style={{margin: '5px', padding: '5px'}}>
       <input
-      style={{borderTop: "1px solid #e0e0e0", borderBottom: "1px solid #e0e0e0"}}
+      style={{border: "none", padding: "0px", backgroundColor: "transparent", width: "80%"}}
         type="text"
         name="search"
         id="filter-search"
         placeholder="Narrow the search"
         onChange={updateFilterUi}
       />
+      <hr></hr>
       <div
         className="filterOptions"
-        style={{ height: "150px", overflow: "auto" }}
+        style={{ height: "140px", overflow: "auto" }}
       >
         <ul
           style={{
