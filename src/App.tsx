@@ -60,7 +60,7 @@ function App() {
       
       <MainBanner />
       <MainBar />
-      <Filter />
+
       <FilterBar ads={adsInUI} handleFilter={handleFilter} removeFromFilterList={removeFromFilterList} />
       <AdList ads={adsInUI} />
     </div>
