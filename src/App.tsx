@@ -1,67 +1,61 @@
 import React, { useState } from "react";
 
 import "./App.css";
-import { AdList, adTypes, IAdTypes } from "./components/ads/AdList";
-import { IAdData } from "./components/ads/Ad";
-import { FilterBar } from "./components/FilterBar/FilterBar";
+import {
+  AdList,
+  adTypes,
+  IAdTypes,
+} from "./components/ads/AdList";
+import { AdData } from "./components/ads/Ad";
+import {
+  FilterBar,
+  FilterModel,
+} from "./components/filter/FilterBar";
 
 import { AdvertDetails } from "./components/advertDetails";
 import { MainBanner } from "./components/mainBanner";
 import { MainBar } from "./components/mainBar";
-import { Filter } from "./components/FilterBar/Filter";
-
-
+import { Filter } from "./components/filter/Filter";
 
 function App() {
-  const [ads, setAds] = useState<IAdData[]>(getMockAdData(adTypes));
-  // filter everything 
-  const [adsInUI, setAdsInUI] = useState<IAdData[]>(getMockAdData(adTypes));
+  const [ads, setAds] = useState<AdData[]>(
+    getMockAdData(adTypes)
+  );
+  // filter everything
+  const [adsInUI, setAdsInUI] = useState<AdData[]>(
+    getMockAdData(adTypes)
+  );
+
+  const [adsAfterFilter, setAdsAfterFilter] = useState<
+    AdData[]
+  >(getMockAdData(adTypes));
 
   //  <---- fileter logic ---->
-  const handleFilter = (event: React.ChangeEvent<HTMLSelectElement>, filterKey: keyof IAdData) => {
+  const handleFilter = (filterModel: FilterModel): void => {
+    console.log({ event: 'handleFilter' });
+  };
 
-    let { value } = event.target
-
-    let filteredAds = adsInUI.filter((ad: IAdData) => {
-      return ad[filterKey] === value
-    })
-
-    if (value === "all") {
-
-      setAdsInUI(getMockAdData(adTypes))
-    } else {
-      setAdsInUI(filteredAds)
-    }
-  }
-
-  const removeFromFilterList = ["about", 'title'];
-
-
+  const removeFromFilterList = ["about", "title"];
 
   // <---- filter UI ---->
-
-
-
-
-
-
 
   // const [filterModel, setFilterModel] = useState({})
   // const adsAfterFilter = filterAds(ads, filterModel)
 
-
-
   // function onFilterChange (model){
-  // setFilterModel(model) 
+  // setFilterModel(model)
   // }
 
   return (
-    <div className="App" >
-      
+    <div className="App">
       <MainBanner />
       <MainBar />
 
-      <FilterBar ads={adsInUI} handleFilter={handleFilter} removeFromFilterList={removeFromFilterList} />
+      <FilterBar
+        ads={adsInUI}
+        handleFilter={handleFilter}
+        removeFromFilterList={removeFromFilterList}
+      />
       <AdList ads={adsInUI} />
     </div>
   );
@@ -69,10 +63,7 @@ function App() {
 
 export default App;
 
-
 // function filterAds(ads, filterModel) {
-
-
 
 //   return //....
 // }
@@ -80,23 +71,19 @@ export default App;
 // function FilterBar(props) {
 //   const { setFilterModel, filterModel } = props;
 
-
-
 //   const onChange = ()=> {
 //     setFilterModel({})
 //   }
 
 //   return <div>
 
-
 //     {/* filter bar  uiUI */}
-
 
 //   </div>
 
 // }
 
-function getMockAdData(adTypes: IAdTypes): IAdData[] {
+function getMockAdData(adTypes: IAdTypes): AdData[] {
   const { OFFERING, REQUEST } = adTypes;
 
   return [

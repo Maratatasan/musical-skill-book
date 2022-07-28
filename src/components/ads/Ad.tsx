@@ -1,4 +1,4 @@
-export interface IAdData {
+export interface AdData {
   title: string;
   skill: string;
   city: string;
@@ -8,7 +8,7 @@ export interface IAdData {
 }
 
 
-export function Ad(props: IAdData): JSX.Element {
+export function Ad(props: AdData): JSX.Element {
 
   const { title, skill, city, about, musicGenre, addType } =
     props;

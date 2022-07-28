@@ -1,5 +1,5 @@
 
-import { Ad, IAdData } from "./Ad";
+import { Ad, AdData } from "./Ad";
 
 export interface IAdTypes {
   OFFERING: string;
@@ -12,7 +12,7 @@ export const adTypes: IAdTypes = {
 };
 
 interface IAdListProps {
-  ads: IAdData[];
+  ads: AdData[];
 }
 
 export function AdList({ ads }: IAdListProps): JSX.Element {

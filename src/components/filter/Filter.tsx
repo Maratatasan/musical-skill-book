@@ -1,9 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 
-interface filterProps {
+export interface FilterProps {
   values: string[];
   name: string;
   getFilterState(filterState: any): void;
+}
+
+
+export interface FilterState {
+  [key: string]: string[];
 }
 
 const liStyle = {
@@ -23,14 +28,15 @@ const labelStyle = {
   paddingBottom: "0px",
 };
 
-export function Filter({ values, name, getFilterState }: filterProps) {
+export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Element {
   // creating initial filter state from values
   let allValues: any = {};
   values.forEach(filter => {
     allValues[filter] = true;
   });
+  
   const [filterState, setFilterState] = useState(allValues);
-  const [filterModel, setFilterModel] = useState(values);
+
   let filterReady = useRef(false);
   // below state is used for "Narrow the search"
   // When you type something in the search bar
@@ -38,6 +44,7 @@ export function Filter({ values, name, getFilterState }: filterProps) {
   const [filtersInTheUI, setFiltersInTheUI] = useState(values);
 
   useEffect(() => {
+
     if (filterState) {
       if (!filterReady.current) {
         console.log(name + " filter is ready");
@@ -55,7 +62,7 @@ export function Filter({ values, name, getFilterState }: filterProps) {
 
       getFilterState({ [name]: currentFilterState });
     }
-  }, [name, filterState, filterModel, getFilterState]);
+  }, [name, filterState, getFilterState]);
 
   return (
     <div>
