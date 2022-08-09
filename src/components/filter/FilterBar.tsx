@@ -4,33 +4,34 @@ import {
   MutableRefObject,
   ChangeEvent,
 } from "react";
-import { AdData } from "../ads/Ad";
+
 import { Filter, FilterState } from "./Filter";
 
-interface IFilterBarProps {
-  ads: AdData[];
+// interfaces for the filter
+interface FilterBarProps {
+  filterKeys: string[];
+  filterSet: FilterModel;
   handleFilter: (filterModel: FilterModel) => void;
-  removeFromFilterList: string[];
 }
 
 export interface FilterModel {
   [key: string]: string[];
 }
 
-export function FilterBar({
-  ads,
-  handleFilter,
-  removeFromFilterList,
-}: IFilterBarProps): JSX.Element {
 
-  const filterDebounce = useRef<ReturnType<typeof setInterval>>();
+// the filter bar component
+export function FilterBar({
+  filterKeys,
+  filterSet,
+  handleFilter,
+}: FilterBarProps): JSX.Element {
+  const filterDebounce =
+    useRef<ReturnType<typeof setInterval>>();
+
   //  <---- filter UI ---->
-  const filterKeys: string[] = extractFilterKeys(
-    ads,
-    removeFromFilterList
-  );
-  const filterSet: FilterModel =
-    extractUniqueDataForFilters(ads, filterKeys);
+
+  // console.log({ component: 'filterBar', filterKeys, filterSet });
+  
   const filterModel: MutableRefObject<FilterModel> = useRef(
     {}
   );
@@ -46,9 +47,7 @@ export function FilterBar({
 
     filterDebounce.current = setTimeout(() => {
       handleFilter(filterModel.current);
-    }
-      , 250);
-      
+    }, 250);
   }
 
   return (
@@ -72,45 +71,4 @@ export function FilterBar({
       </div>
     </div>
   );
-}
-
-function extractUniqueDataForFilters(
-  ads: AdData[],
-  filterKeys: string[]
-): FilterModel {
-  const setsForFilters: any = {};
-  let ad: any;
-  let key: string;
-
-  for (ad of ads) {
-    for (key of filterKeys) {
-      if (ad[key]) {
-        if (!setsForFilters.hasOwnProperty(key)) {
-          setsForFilters[key] = new Set();
-        }
-        setsForFilters[key].add(ad[key]);
-      }
-    }
-  }
-
-  const uniqueDataForFilters: FilterModel = {};
-
-  for (key of filterKeys) {
-    uniqueDataForFilters[key] = [...setsForFilters[key]];
-  }
-
-  return uniqueDataForFilters;
-}
-
-function extractFilterKeys(
-  ads: AdData[],
-  removeFromFilterList: string[]
-) {
-  const filterKeys = Object.keys(ads[0]);
-  for (let removeItem of removeFromFilterList) {
-    if (filterKeys.indexOf(removeItem) > -1) {
-      filterKeys.splice(filterKeys.indexOf(removeItem), 1);
-    }
-  }
-  return filterKeys;
 }

@@ -17,6 +17,12 @@ import { MainBanner } from "./components/mainBanner";
 import { MainBar } from "./components/mainBar";
 import { Filter } from "./components/filter/Filter";
 
+// methods
+import {
+  extractFilterKeys,
+  extractUniqueDataForFilters,
+} from "./components/filter/filterMethods";
+
 function App() {
   const [ads, setAds] = useState<AdData[]>(
     getMockAdData(adTypes)
@@ -31,20 +37,37 @@ function App() {
   >(getMockAdData(adTypes));
 
   //  <---- fileter logic ---->
+
   const handleFilter = (filterModel: FilterModel): void => {
-    console.log({ event: 'handleFilter' });
+    let filteredAds = ads.filter((ad: AdData, i) => {
+      type AdKey = keyof typeof ad;
+
+      for (const props of Object.entries(filterModel)) {
+        let adPropName = props[0] as AdKey;
+        let activeValues: string[] = props[1];
+        if (!activeValues.includes(ad[adPropName])) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    setAdsAfterFilter(filteredAds);
   };
 
   const removeFromFilterList = ["about", "title"];
 
   // <---- filter UI ---->
 
-  // const [filterModel, setFilterModel] = useState({})
-  // const adsAfterFilter = filterAds(ads, filterModel)
-
-  // function onFilterChange (model){
-  // setFilterModel(model)
-  // }
+  let filterKeys = extractFilterKeys(
+    ads,
+    removeFromFilterList
+  );
+  let filterSet = extractUniqueDataForFilters(
+    ads,
+    filterKeys
+  );
 
   return (
     <div className="App">
@@ -52,11 +75,11 @@ function App() {
       <MainBar />
 
       <FilterBar
-        ads={adsInUI}
         handleFilter={handleFilter}
-        removeFromFilterList={removeFromFilterList}
+        filterKeys={filterKeys}
+        filterSet={filterSet}
       />
-      <AdList ads={adsInUI} />
+      <AdList ads={adsAfterFilter} />
     </div>
   );
 }

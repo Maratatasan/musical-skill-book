@@ -29,7 +29,7 @@ const labelStyle = {
 };
 
 export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Element {
-  // creating initial filter state from values
+  // creating initial filter state from values  
   let allValues: any = {};
   values.forEach(filter => {
     allValues[filter] = true;
