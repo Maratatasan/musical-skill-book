@@ -56,9 +56,9 @@ function App() {
     setAdsAfterFilter(filteredAds);
   };
 
-  const removeFromFilterList = ["about", "title"];
-
+  
   // <---- filter UI ---->
+  const removeFromFilterList = ["about", "title"];
 
   let filterKeys = extractFilterKeys(
     ads,
@@ -86,25 +86,6 @@ function App() {
 
 export default App;
 
-// function filterAds(ads, filterModel) {
-
-//   return //....
-// }
-
-// function FilterBar(props) {
-//   const { setFilterModel, filterModel } = props;
-
-//   const onChange = ()=> {
-//     setFilterModel({})
-//   }
-
-//   return <div>
-
-//     {/* filter bar  uiUI */}
-
-//   </div>
-
-// }
 
 function getMockAdData(adTypes: IAdTypes): AdData[] {
   const { OFFERING, REQUEST } = adTypes;

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { filterStyle } from "./filterStyle";
 
 export interface FilterProps {
   values: string[];
@@ -6,45 +7,38 @@ export interface FilterProps {
   getFilterState(filterState: any): void;
 }
 
-
 export interface FilterState {
   [key: string]: string[];
 }
 
-const liStyle = {
-  display: "flex",
-  alignItems: "center",
-  padding: "0px",
-  margin: "0px",
-};
 
-const checkboxStyle = {
-  marginRight: "4px",
-  marginBottom: "0px",
-  padding: "0px",
-};
 
 const labelStyle = {
   paddingBottom: "0px",
 };
 
-export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Element {
-  // creating initial filter state from values  
+export function Filter({
+  values,
+  name,
+  getFilterState,
+}: FilterProps): JSX.Element {
+  // creating initial filter state from values
   let allValues: any = {};
-  values.forEach(filter => {
+  values.forEach((filter) => {
     allValues[filter] = true;
   });
-  
-  const [filterState, setFilterState] = useState(allValues);
 
+  const [filterState, setFilterState] = useState(allValues);
+const activeButton = "lightgreen"
+const inactiveButton = "transparent"
   let filterReady = useRef(false);
   // below state is used for "Narrow the search"
   // When you type something in the search bar
   // it will update the available values in filter UI
-  const [filtersInTheUI, setFiltersInTheUI] = useState(values);
+  const [filtersInTheUI, setFiltersInTheUI] =
+    useState(values);
 
   useEffect(() => {
-
     if (filterState) {
       if (!filterReady.current) {
         console.log(name + " filter is ready");
@@ -54,7 +48,9 @@ export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Elem
 
       let currentFilterState = [];
 
-      for (const [option, checked] of Object.entries(filterState)) {
+      for (const [option, checked] of Object.entries(
+        filterState
+      )) {
         if (checked) {
           currentFilterState.push(option);
         }
@@ -67,14 +63,12 @@ export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Elem
   return (
     <div>
       <h4 className="key-header"> {name}</h4>
-      <div className="grey-one radius-5 spacing-05" style={{ margin: "5px", padding: "5px" }}>
+      <div
+        className="grey-one radius-5 spacing-05"
+        style={filterStyle.padAndMargin5}
+      >
         <input
-          style={{
-            border: "none",
-            padding: "0px",
-            backgroundColor: "transparent",
-            width: "80%",
-          }}
+          style={filterStyle.filterSearch}
           type="text"
           name="search"
           id="filter-search"
@@ -82,36 +76,49 @@ export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Elem
           onChange={updateFilterUi}
         />
         <hr></hr>
-        <div className="filterOptions" style={{ height: "140px", overflow: "auto" }}>
+        <div
+          className="filterOptions"
+          style={{ height: "140px", overflow: "auto" }}
+        >
           <ul
-            style={{
-              listStyle: "none",
-              alignItems: "start",
-              display: "flex",
-              flexDirection: "column",
-              padding: "5px",
-              margin: "0px",
-            }}
+            style={filterStyle.filterOptions}
+            className="list"
           >
-            <li style={liStyle} key={"select-all-li"}>
-              <input
+            <li
+              style={filterStyle.liStyle}
+              key={"select-all-li"}
+            >
+              <button
                 name="select-all"
-                style={checkboxStyle}
-                type="checkbox"
+                style={{...filterStyle.checkboxStyle, background: isEverySelected()? activeButton : inactiveButton}}
                 key={"select-all"}
-                checked={Object.values(filterState).every(v => v)}
-                onChange={handleSelectAll}
-              />
-              <label htmlFor="select-all" style={labelStyle} key="select-all-label">
-                select/deselect all
-              </label>
+                onClick={handleSelectAll}
+              >
+                {" "}
+                Filter Off
+              </button>
             </li>
             {filtersInTheUI.map((filter, index) => (
-              <li style={liStyle} key={filter + "li"}>
-                <input name={filter} style={checkboxStyle} type="checkbox" key={filter} checked={filterState[filter]} onChange={updateFilterState} />
-                <label htmlFor={filter} style={labelStyle} key={filter + "label"}>
+              <li
+                style={filterStyle.liStyle}
+                key={filter + "li"}
+              >
+                <button
+                  name={filter}
+                  style={{
+                    ...filterStyle.checkboxStyle,
+                    background: isEverySelected()
+                      ? inactiveButton
+                      : filterState[filter]
+                      ? activeButton
+                      : inactiveButton,
+                  }}
+                  key={filter}
+                  onClick={handleFilter}
+                >
+                  {" "}
                   {filter}
-                </label>
+                </button>
               </li>
             ))}
           </ul>
@@ -120,24 +127,56 @@ export function Filter({ values, name, getFilterState }: FilterProps) : JSX.Elem
     </div>
   );
 
-  function updateFilterUi(e: React.FormEvent<HTMLInputElement>) {
+  function updateFilterUi(
+    e: React.FormEvent<HTMLInputElement>
+  ) {
     const { value } = e.currentTarget;
-    let newUiState = values.filter(f => f.includes(value));
+    let newUiState = values.filter((f) =>
+      f.includes(value)
+    );
     setFiltersInTheUI(newUiState);
   }
 
-  function updateFilterState(e: React.FormEvent<HTMLInputElement>) {
+  function updateFilterState(
+    e: React.FormEvent<HTMLInputElement>
+  ) {
     const { checked } = e.currentTarget;
     const { name } = e.currentTarget;
 
     setFilterState({ ...filterState, [name]: checked });
   }
 
-  function handleSelectAll(e: React.FormEvent<HTMLInputElement>) {
-    const { checked } = e.currentTarget;
+  function isEverySelected() {
+    return Object.values(filterState).every((v) => v);
+  }
+
+  function handleFilter(e: any) {
+    const { name } = e.currentTarget;
+    console.log(e.target.name);
+
+    // if All selected then select one
+
     const newState: any = {};
-    values.forEach(filter => {
-      newState[filter] = checked;
+    if (isEverySelected()) {
+      values.forEach((filter) => {
+        newState[filter] = false;
+      });
+      newState[name] = true;
+      setFilterState(newState);
+    } else {
+      setFilterState({
+        ...filterState,
+        [name]: !filterState[name],
+      });
+    }
+
+    console.log(newState);
+  }
+
+  function handleSelectAll(e: any) {
+    const newState: any = {};
+    values.forEach((filter) => {
+      newState[filter] = true;
     });
     setFilterState(newState);
   }
